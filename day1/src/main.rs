@@ -14,7 +14,7 @@ fn part_1(input: &Vec<u32>) -> u32 {
 fn part_2(input: &Vec<u32>) -> u32 {
     input
         .into_iter()
-        .tuple_combinations::<(_, _, _)>()
+        .tuple_combinations()
         .filter(|(&a, &b, &c)| a + b + c == 2020)
         .map(|(&a, &b, &c)| a * b * c)
         .next()
