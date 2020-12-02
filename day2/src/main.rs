@@ -1,5 +1,6 @@
-use itertools::Itertools;
 use std::fs::read_to_string;
+
+mod parser;
 
 struct Password {
     policy_letter: char,
@@ -30,19 +31,7 @@ impl Password {
 
 impl From<&str> for Password {
     fn from(other: &str) -> Self {
-        let (policy, raw_value) = other.split(":").collect_tuple().unwrap();
-        let (policy_range_str, policy_letter_str) = policy.split(" ").collect_tuple().unwrap();
-        let policy_range = policy_range_str
-            .split("-")
-            .map(|val| val.parse::<usize>().unwrap())
-            .collect_tuple()
-            .unwrap();
-
-        Password {
-            policy_letter: policy_letter_str.chars().exactly_one().unwrap(),
-            policy_range,
-            value: raw_value.trim().into(),
-        }
+        parser::password_declaration(other).unwrap().1
     }
 }
 
