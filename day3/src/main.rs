@@ -1,23 +1,7 @@
 use std::fs::read_to_string;
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
-enum Field {
-    Tree,
-    Empty,
-}
-
-impl From<char> for Field {
-    fn from(value: char) -> Self {
-        match value {
-            '#' => Self::Tree,
-            '.' => Self::Empty,
-            _ => panic!("Unknown char {}", value),
-        }
-    }
-}
-
 struct TreeMap {
-    map: Vec<Vec<Field>>,
+    map: Vec<Vec<char>>,
 }
 
 impl TreeMap {
@@ -27,14 +11,11 @@ impl TreeMap {
     }
 
     fn from_str(input: &str) -> Self {
-        let map: Vec<Vec<Field>> = input
-            .lines()
-            .map(|line| line.chars().map(|c| c.into()).collect())
-            .collect();
+        let map: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
         TreeMap { map }
     }
 
-    fn slope(&self, (slope_right, slope_down): (usize, usize)) -> impl Iterator<Item = Field> + '_ {
+    fn slope(&self, (slope_right, slope_down): (usize, usize)) -> impl Iterator<Item = char> + '_ {
         self.map
             .iter()
             .step_by(slope_down)
@@ -46,10 +27,7 @@ impl TreeMap {
 }
 
 fn part_1(input: &TreeMap) -> usize {
-    input
-        .slope((3, 1))
-        .filter(|&field| field == Field::Tree)
-        .count()
+    input.slope((3, 1)).filter(|&field| field == '#').count()
 }
 
 fn part_2(input: &TreeMap) -> usize {
@@ -59,7 +37,7 @@ fn part_2(input: &TreeMap) -> usize {
             input
                 .clone()
                 .slope(slope_val)
-                .filter(|&field| field == Field::Tree)
+                .filter(|&field| field == '#')
                 .count()
         })
         .fold(1, |a, b| a * b)
