@@ -37,13 +37,10 @@ impl TreeMap {
     fn slope(&self, (slope_right, slope_down): (usize, usize)) -> impl Iterator<Item = Field> + '_ {
         self.map
             .iter()
-            .enumerate()
             .step_by(slope_down)
-            .map(move |(row_idx, row)| {
-                let slope = slope_right as f32 / slope_down as f32;
-                let column_idx = (row_idx as f32 * slope) as usize;
-                *row.into_iter().cycle().skip(column_idx).next().unwrap()
-            })
+            .map(move |row| row.iter().cycle().step_by(slope_right))
+            .enumerate()
+            .map(|(row_idx, row_iter)| *row_iter.skip(row_idx).next().unwrap())
             .skip(1)
     }
 }
