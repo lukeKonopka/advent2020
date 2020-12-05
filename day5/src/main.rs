@@ -19,7 +19,7 @@ fn path_to_seat_id(path: &str) -> usize {
     let (row_path, column_path) = path.split_at(path.len() - 3);
     let (row, _) = row_path
         .chars()
-        .fold((0 as u8, 127 as u8), |range, c| take_range(range, c));
+        .fold((0, 127), |range, c| take_range(range, c));
     let (column, _) = column_path
         .chars()
         .fold((0, 7), |range, c| take_range(range, c));
