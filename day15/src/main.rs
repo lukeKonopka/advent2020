@@ -43,13 +43,13 @@ impl Iterator for MemoryGameIterator {
 }
 
 fn part_1(initial: &Vec<u32>) -> u32 {
-    let iter = MemoryGameIterator::from_starting(initial);
-    iter.skip(2019).next().unwrap()
+    let mut iter = MemoryGameIterator::from_starting(initial);
+    iter.nth(2020).unwrap()
 }
 
 fn part_2(initial: &Vec<u32>) -> u32 {
-    let iter = MemoryGameIterator::from_starting(initial);
-    iter.skip(30000000 - 1).next().unwrap()
+    let mut iter = MemoryGameIterator::from_starting(initial);
+    iter.nth(30000000).unwrap()
 }
 
 fn main() {
