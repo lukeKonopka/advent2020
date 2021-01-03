@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use std::fs::read_to_string;
 
-fn part_1(input: &Vec<u32>) -> u32 {
+fn part_1(input: &[u32]) -> u32 {
     input
         .into_iter()
         .tuple_combinations()
@@ -11,7 +11,7 @@ fn part_1(input: &Vec<u32>) -> u32 {
         .unwrap()
 }
 
-fn part_2(input: &Vec<u32>) -> u32 {
+fn part_2(input: &[u32]) -> u32 {
     input
         .into_iter()
         .tuple_combinations()
@@ -26,7 +26,7 @@ fn main() {
         .unwrap()
         .lines()
         .map(|value| value.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
+        .collect::<Vec<_>>();
     println!("Part 1: {}", part_1(&input_lines));
     println!("Part 2: {}", part_2(&input_lines));
 }
